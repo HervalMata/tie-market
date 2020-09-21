@@ -6,7 +6,6 @@ use App\Models\Category;
 use Illuminate\Database\Seeder;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class CategorySeeder extends Seeder
@@ -23,29 +22,33 @@ class CategorySeeder extends Seeder
     {
         $this->allFakerPhotos = $this->getFakerPhotos();
         $this->deleteAllPhotosCategoriesPath();
-        DB::table('categories')->insert([
+        Category::createWithPhoto([
             'category_name' => 'Laços',
+            'slug' => 'lacos',
             'description' => 'Os mais lindos e fofos laços para enfeitar sua criança',
-            'photo' => $this->getUploadedFile()
+            'photo' => $this->getLacoPhoto()
         ]);
-        DB::table('categories')->insert([
+        Category::createWithPhoto([
             'category_name' => 'Tiaras',
+            'slug' => 'tiaras',
             'description' => 'As mais lindas e fofas tiaras para enfeitar sua cabeça',
-            'photo' => $this->getUploadedFile()
+            'photo' => $this->getTiaraPhoto()
         ]);
-        DB::table('categories')->insert([
+        Category::createWithPhoto([
             'category_name' => 'Viseiras',
+            'slug' => 'viseiras',
             'description' => 'As mais lindas e fofas viseiras para enfeitar sua cabeça',
-            'photo' => $this->getUploadedFile()
+            'photo' => $this->getViseiraPhoto()
         ]);
-        DB::table('categories')->insert([
+        Category::createWithPhoto([
             'category_name' => 'Faixas Para Bebe',
+            'slug' => 'faixas-para-bebe',
             'description' => 'As mais lindas e fofas faixas para enfeitar a cabeça de seu bebe',
             'photo' => $this->getUploadedFile()
         ]);
-        Category::factory()->times(20)->make()->each([
-            'photo' => $this->getUploadedFile()
-        ]);
+        Category::factory(20)->make()->each(function (Category $category) {
+            Category::createWithPhoto($category->toArray() + ['photo' => $this->getUploadedFile()]);
+        });
     }
 
     /**
@@ -62,7 +65,7 @@ class CategorySeeder extends Seeder
      */
     private function deleteAllPhotosCategoriesPath()
     {
-        $path = Category::PRODUCTS_PATH;
+        $path = Category::CATEGORIES_PATH;
         \File::deleteDirectory(storage_path($path), true);
     }
 
@@ -74,5 +77,49 @@ class CategorySeeder extends Seeder
         $photoFile = $this->allFakerPhotos->random();
         $uploadFile = new UploadedFile($photoFile->getRealPath(), Str::random(16) . '.' . $photoFile->getExtension());
         return $uploadFile;
+    }
+
+    /**
+     * @return UploadedFile
+     */
+    private function getLacoPhoto()
+    {
+        return new UploadedFile(
+            storage_path('app/faker/product_photos/bgntnumymjnimki,imimimiymi.jpg'),
+            Str::random(16) . 'jpg'
+        );
+    }
+
+    /**
+     * @return UploadedFile
+     */
+    private function getFaixaPhoto()
+    {
+        return new UploadedFile(
+            storage_path('app/faker/product_photos/btrntynrhgrtgtbrthyrtyjtujujtu.jpg'),
+            Str::random(16) . 'jpg'
+        );
+    }
+
+    /**
+     * @return UploadedFile
+     */
+    private function getTiaraPhoto()
+    {
+        return new UploadedFile(
+            storage_path('app/faker/product_photos/btrryhhybryhydtvbbyhrhththyyyfyys.jpg'),
+            Str::random(16) . 'jpg'
+        );
+    }
+
+    /**
+     * @return UploadedFile
+     */
+    private function getViseiraPhoto()
+    {
+        return new UploadedFile(
+            storage_path('app/faker/product_photos/btryjukki7kkukyjtyyhyjukikuyukiklikyujns.jpg'),
+            Str::random(16) . 'jpg'
+        );
     }
 }

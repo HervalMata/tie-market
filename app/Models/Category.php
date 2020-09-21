@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\DB;
 
 class Category extends Model
 {
@@ -89,5 +90,26 @@ class Category extends Model
     {
         $path = self::photosDir();
         return "{$path}/{$this->photo}";
+    }
+
+    /**
+     * @param array $data
+     * @return Product
+     * @throws \Exception
+     */
+    public static function createWithPhoto(array $data): Category
+    {
+        try {
+            self::uploadPhoto($data['photo']);
+            DB::beginTransaction();
+            $data['photo'] = $data['photo']->hashName();
+            $category = self::create($data);
+            DB::commit();
+            return $category;
+        } catch (\Exception $e) {
+            self::deleteFile($data['photo']);
+            DB::rollBack();
+            throw $e;
+        }
     }
 }
