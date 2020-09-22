@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Shop\CategoryController;
+use App\Http\Controllers\Shop\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,6 +23,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['namespace' => 'Api', 'as' => 'api.'], function () {
  Route::prefix('shop')->group(function () {
 	Route::get('categories', [CategoryController::class, 'index']);
+     Route::get('products', [ProductController::class, 'index']);
  });
 });
 
