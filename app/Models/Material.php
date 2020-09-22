@@ -7,20 +7,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Color extends Model
+class Material extends Model
 {
     use HasFactory;
     use Sluggable;
 
-    protected $fillable = ['color_name', 'slug'];
-
-    /**
-     * @return BelongsToMany
-     */
-    public function products()
-    {
-        return $this->belongsToMany(Product::class);
-    }
+    protected $fillable = ['material_name', 'slug'];
 
     /**
      * Return the sluggable configuration array for this model.
@@ -31,8 +23,16 @@ class Color extends Model
     {
         return [
             'slug' => [
-                'source' => 'color_name'
+                'source' => 'material_name'
             ]
         ];
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function products()
+    {
+        return $this->belongsToMany(Product::class);
     }
 }

@@ -50,4 +50,12 @@ class Product extends Model
     {
         return $this->belongsToMany(Color::class);
     }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function materials()
+    {
+        return $this->belongsToMany(Material::class);
+    }
 }
