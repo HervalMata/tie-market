@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Shop\CategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,4 +19,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('shop/categories', 'Shop/CategoryController@index')->name('shop.categories');
+Route::group(['namespace' => 'Api', 'as' => 'api.'], function () {
+ Route::prefix('shop')->group(function () {
+	Route::get('categories', [CategoryController::class, 'index']);
+ });
+});
+
