@@ -10,7 +10,7 @@ class ProductFilter extends ModelFilter
 {
     public function category($id)
     {
-        return $this->where('category_id', $id);
+        return $this->related('category', 'category_id', '=', $id);
     }
 
     public function name($name)
