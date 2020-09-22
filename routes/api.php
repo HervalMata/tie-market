@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ColorController;
 use App\Http\Controllers\Api\Shop\ProductController;
 use App\Http\Controllers\Shop\CategoryController;
 use Illuminate\Http\Request;
@@ -25,5 +26,8 @@ Route::group(['namespace' => 'Api', 'as' => 'api.'], function () {
 	Route::get('categories', [CategoryController::class, 'index']);
      Route::get('products', [ProductController::class, 'index']);
  });
+    Route::apiResources([
+        'colors', ColorController::class
+    ]);
 });
 
