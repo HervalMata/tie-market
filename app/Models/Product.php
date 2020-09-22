@@ -16,7 +16,7 @@ class Product extends Model
 
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ['product_name', 'slug', 'product_code', 'description', 'atock', 'price', 'featured', 'active', 'photo', 'category_id'];
+    protected $fillable = ['product_name', 'slug', 'product_code', 'description', 'stock', 'price', 'featured', 'active', 'photo', 'category_id'];
 
     /**
      * Return the sluggable configuration array for this model.
