@@ -10,7 +10,7 @@ class ProductPhoto extends Model
     use HasFactory;
 
     const BASE_PATH = 'app/public';
-    const DIR_PRODUCTS = 'products';
+    const DIR_PRODUCTS = 'product_photos';
     const PRODUCTS_PATH = self::BASE_PATH . '/' . self::DIR_PRODUCTS;
 
     protected $fillable = ['file_name', 'product_id'];

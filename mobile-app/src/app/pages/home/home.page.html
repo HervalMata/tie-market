@@ -1,0 +1,35 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Home</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-slides [options]="sliderConfig">
+        <ion-slide *ngFor="let category of categories">
+            <ion-card>
+                <ion-card-header>
+                    <ion-card-title>{{ category.category_name}}</ion-card-title>
+                </ion-card-header>
+                <ion-card-content>
+                    <img (click)="productsByCategory()" src="{{category.photo_url}}">
+                    <hr/>
+                </ion-card-content>
+            </ion-card>
+        </ion-slide>
+    </ion-slides>
+    <hr/>
+    <ion-slides [options]="sliderConfig">
+        <ion-slide *ngFor="let product of products">
+            <ion-card>
+                <ion-card-header>
+                    <ion-card-title>{{ product.product_name}}</ion-card-title>
+                </ion-card-header>
+                <ion-card-content>
+                    <img (click)="productDetail()" src="{{product.photo_url}}">
+                    <hr/>
+                </ion-card-content>
+            </ion-card>
+        </ion-slide>
+    </ion-slides>
+</ion-content>

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Filters;
+namespace App\ModelFilters;
 
 
 use EloquentFilter\ModelFilter;
